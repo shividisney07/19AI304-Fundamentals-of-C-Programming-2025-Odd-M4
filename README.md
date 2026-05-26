@@ -1,10 +1,9 @@
-# 19AI304-Fundamentals-of-C-Programming-2025-Odd-M4
 # IAPR-4- Module 4 - FoC
 ## 7. Implementation of Functions.
 ## 8. Implementation of passing parameters.
 # Ex.No:16
   Implement a C program to read a date in the format DD/MM/YYYY and determine whether the entered date is valid. The program should check the correctness of the day, month, and year, including leap year calculations for February.
-# Date : 
+# Date :  15.05.2026
 # Aim:
  To implement a C program that validates a user-entered date using a function without parameters and without return value, ensuring the correctness of day, month, year, and leap year conditions.
 # Algorithm:
@@ -41,7 +40,41 @@
 ### Step 14: 
   Stop
 # Program:
+```
+#include <stdio.h>
+
+int main() {
+    int d, m, y, maxDay;
+
+    scanf("%d/%d/%d", &d, &m, &y);
+
+    if (y < 1 || m < 1 || m > 12 || d < 1) {
+        printf("Invalid Date");
+        return 0;
+    }
+
+    if (m == 2) {
+        if ((y % 400 == 0) || (y % 4 == 0 && y % 100 != 0))
+            maxDay = 29;
+        else
+            maxDay = 28;
+    } else if (m == 4 || m == 6 || m == 9 || m == 11) {
+        maxDay = 30;
+    } else {
+        maxDay = 31;
+    }
+
+    if (d <= maxDay)
+        printf("Valid Date");
+    else
+        printf("Invalid Date");
+
+    return 0;
+}
+```
 # Output:
+<img width="1323" height="734" alt="image" src="https://github.com/user-attachments/assets/7aaa9ae7-4166-44b5-8ad2-efb9c4ace177" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -89,7 +122,30 @@ Thus, the program was implemented and executed successfully, and the required ou
 ### Step 13: 
   Stop
 # Program:
+```
+#include <stdio.h>
+
+int max(int a, int b) {
+    return (a > b) ? a : b;
+}
+
+int min(int a, int b) {
+    return (a < b) ? a : b;
+}
+
+int main() {
+    int x, y;
+
+    scanf("%d %d", &x, &y);
+
+    printf("Maximum: %d\n", max(x, y));
+    printf("Minimum: %d\n", min(x, y));
+
+    return 0;
+}
+```
 # Output:
+<img width="1307" height="616" alt="image" src="https://github.com/user-attachments/assets/9d4a1513-e062-4b0a-b352-906f21267eec" />
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -137,7 +193,31 @@ Thus, the program was implemented and executed successfully, and the required ou
 ### Step 11: 
  Stop
 # Program:
+```
+#include <stdio.h>
+
+float celsiusToFahrenheit(float c) {
+    return (c * 9 / 5) + 32;
+}
+
+float fahrenheitToCelsius(float f) {
+    return (f - 32) * 5 / 9;
+}
+
+int main() {
+    float c, f;
+
+    scanf("%f %f", &c, &f);
+
+    printf("Celsius to Fahrenheit: %.2f\n", celsiusToFahrenheit(c));
+    printf("Fahrenheit to Celsius: %.2f\n", fahrenheitToCelsius(f));
+
+    return 0;
+}
+```
 # Output:
+<img width="1290" height="658" alt="image" src="https://github.com/user-attachments/assets/459428c1-ebc2-4452-a78c-7ff9ec4b4ccc" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -146,7 +226,7 @@ Thus, the program was implemented and executed successfully, and the required ou
 # IAPR-4- Module 4 - FoC
 # Ex.No:19
   Build a C program to print the elements of a given 4×4 matrix in spiral order starting from the top-left element and moving clockwise,using a user-defined parameterized function without return spiralPrint().
-# Date : 
+# Date :  
 # Aim:
  To build a C program to display the elements of a 2D array in spiral form, traversing the outer elements first and then moving inward in a clockwise direction, using a user-defined parameterized function without return spiralPrint().
 # Algorithm:
@@ -185,7 +265,50 @@ Thus, the program was implemented and executed successfully, and the required ou
 ### Step 7: 
   Stop
 # Program:
+```
+#include <stdio.h>
+
+void spiralPrint(int a[4][4]) {
+    int top = 0, bottom = 3, left = 0, right = 3;
+
+    while (top <= bottom && left <= right) {
+        for (int i = left; i <= right; i++)
+            printf("%d ", a[top][i]);
+        top++;
+
+        for (int i = top; i <= bottom; i++)
+            printf("%d ", a[i][right]);
+        right--;
+
+        if (top <= bottom) {
+            for (int i = right; i >= left; i--)
+                printf("%d ", a[bottom][i]);
+            bottom--;
+        }
+
+        if (left <= right) {
+            for (int i = bottom; i >= top; i--)
+                printf("%d ", a[i][left]);
+            left++;
+        }
+    }
+}
+
+int main() {
+    int a[4][4];
+
+    for (int i = 0; i < 4; i++)
+        for (int j = 0; j < 4; j++)
+            scanf("%d", &a[i][j]);
+
+    spiralPrint(a);
+
+    return 0;
+}
+```
 # Output:
+<img width="1395" height="665" alt="image" src="https://github.com/user-attachments/assets/922581d0-1568-41d4-b06b-e3f4a13a71d3" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -220,7 +343,45 @@ To build a C program to convert a string as described above, using a user-define
 ### Step 6: 
  Stop
 # Program:
+```
+#include <stdio.h>
+#include <ctype.h>
+
+void convert(char str[]) {
+    int i = 0;
+
+    if (str[0] != '\0' && str[0] != ' ')
+        str[0] = toupper(str[0]);
+
+    while (str[i] != '\0') {
+        if (str[i] == ' ') {
+            if (str[i - 1] != ' ')
+                str[i - 1] = toupper(str[i - 1]);
+            if (str[i + 1] != '\0' && str[i + 1] != ' ')
+                str[i + 1] = toupper(str[i + 1]);
+        }
+        i++;
+    }
+
+    if (i > 0 && str[i - 1] != ' ')
+        str[i - 1] = toupper(str[i - 1]);
+}
+
+int main() {
+    char str[100];
+
+    scanf("%[^\n]", str);
+
+    convert(str);
+
+    printf("%s", str);
+
+    return 0;
+}
+```
 # Output:
+<img width="1440" height="666" alt="image" src="https://github.com/user-attachments/assets/2d4b11d1-016c-4141-9a28-2304ba7f0e4e" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
